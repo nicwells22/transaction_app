@@ -110,3 +110,6 @@ Pipfile.lock
 # VSCode
 .vscode/
 
+
+.idea
+
