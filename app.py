@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_restful import Resource, Api
-from db import get_max_buyer_id, get_max_seller_id, create_buyer, create_seller
+from db import get_max_buyer_id, get_max_seller_id, get_max_location_id, create_buyer, create_seller, create_seller_location
 
 app = Flask(__name__)
 api = Api(app)
@@ -29,11 +29,28 @@ class HandleSeller(Resource):
 
 class HandleSellerLocation(Resource):
     def post(self):
-        pass
+        json_data = request.get_json(force=True)
+        seller_id = json_data['seller_id']
+        lat = json_data.get('lat')
+        long = json_data.get('long')
+        location_id = self.create_location_id()
+        create_seller_location(location_id, seller_id, lat, long)
+        return {'location_id': location_id, 'seller_id': seller_id, 'lat': lat, 'long': long}
+
+    def create_location_id(self):
+        return get_max_location_id() + 1
 
 
 class HandleTransaction(Resource):
     def post(self):
+        pass
+
+
+class HandleItems(Resource):
+    def post(self):
+        pass
+
+    def get(self):
         pass
 
 api.add_resource(HandleBuyer, '/buyer')

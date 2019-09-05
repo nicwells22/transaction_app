@@ -64,6 +64,13 @@ def get_max_seller_id():
     for re in r:
         return re[0]
 
+def get_max_location_id():
+    engine = create_sql_engine()
+    r = engine.execute('SELECT MAX(location_id) FROM public.seller_location')
+    engine.dispose()
+    for re in r:
+        return re[0]
+
 
 if __name__ == '__main__':
     r = random.randint(100, 10000)
