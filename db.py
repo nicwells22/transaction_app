@@ -57,6 +57,7 @@ def get_max_buyer_id():
     for re in r:
         return re[0]
 
+
 def get_max_seller_id():
     engine = create_sql_engine()
     r = engine.execute('SELECT MAX(seller_id) FROM public.seller')
@@ -64,9 +65,26 @@ def get_max_seller_id():
     for re in r:
         return re[0]
 
+
 def get_max_location_id():
     engine = create_sql_engine()
     r = engine.execute('SELECT MAX(location_id) FROM public.seller_location')
+    engine.dispose()
+    for re in r:
+        return re[0]
+
+
+def get_max_transaction_id():
+    engine = create_sql_engine()
+    r = engine.execute('SELECT MAX(transaction_id) FROM public.transact')
+    engine.dispose()
+    for re in r:
+        return re[0]
+
+
+def get_max_item_id():
+    engine = create_sql_engine()
+    r = engine.execute('SELECT MAX(item_id) FROM public.items')
     engine.dispose()
     for re in r:
         return re[0]

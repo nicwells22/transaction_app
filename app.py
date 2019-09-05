@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_restful import Resource, Api
-from db import get_max_buyer_id, get_max_seller_id, get_max_location_id, create_buyer, create_seller, create_seller_location
+from db import get_max_buyer_id, get_max_seller_id, get_max_location_id, get_max_transaction_id, get_max_item_id
+from db import create_buyer, create_seller, create_seller_location, create_item, create_transcation
 
 app = Flask(__name__)
 api = Api(app)
@@ -43,12 +44,43 @@ class HandleSellerLocation(Resource):
 
 class HandleTransaction(Resource):
     def post(self):
-        pass
+        json_data = request.get_json(force=True)
+        transaction_id = self.create_transaction_id()
+        location_id = json_data['location_id']
+        buyer_id = json_data['buyer_id']
+        sub_total = json_data['sub_total']
+        tax = json_data['tax']
+        total = json_data['total']
+        lat = json_data.get('lat')
+        long = json_data.get('long')
+        create_transcation(transaction_id, location_id, buyer_id, sub_total, tax, total, lat, long)
+
+        # create items associated with transaction
+        items = json_data['items']
+        return_items = []
+        for item in items:
+            item_id = self.create_item_id()
+            name = item['name']
+            common_name = item['common_name']
+            cost = item['cost']
+            create_item(item_id, transaction_id, name, common_name, cost)
+            return_items.append({'item_id': item_id, 'name': name, 'common_name': common_name, 'cost': cost})
+
+        return {'transaction_id': transaction_id, 'location_id': location_id, 'buyer_id': buyer_id,
+                'items': return_items, 'sub_total': sub_total, 'tax': tax, 'total': total, 'lat': lat, 'long': long}
+
+
+    def create_transaction_id(self):
+        return get_max_transaction_id() + 1
+
+
+    def create_item_id(self):
+        return get_max_item_id() + 1
 
 
 class HandleItems(Resource):
     def post(self):
-        pass
+        json_data = request.get_json(force=True)
 
     def get(self):
         pass
