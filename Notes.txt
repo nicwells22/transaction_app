@@ -1,0 +1,14 @@
+Seller must be made first,
+Then a seller location. This is done independent of buyer.
+
+A buyer needs to be made independent of the seller.
+
+Once buyer and seller exist, they can have a transaction. Items wil be placed in the database before the transaction, but to a user standpoint they need to happen at the same time.
+
+Next step is to build these functionalities in python connecting to the db:
+	Create Seller
+	create seller location
+
+	create buyer
+
+	create transaction/items

@@ -16,7 +16,7 @@ class Transaction:
     tax # can be used to calculate the tax rate
     total # will probably be provided, but can be calculated as sub_total + tax
     """
-    def __init__(self, location_id, user_id, items,sub_total, tax, total, transaction_coords=None):
+    def __init__(self, location_id, user_id, items, sub_total, tax, total, transaction_coords=None):
         self.transaction_id = self.generate_transaction_id()
         self.location_id = location_id
         self.user_id = user_id
