@@ -50,6 +50,21 @@ def create_item(item_id, transaction_id, item_name, item_common_name, item_cost)
     engine.dispose()
 
 
+def get_max_buyer_id():
+    engine = create_sql_engine()
+    r = engine.execute('SELECT MAX(buyer_id) FROM public.buyer')
+    engine.dispose()
+    for re in r:
+        return re[0]
+
+def get_max_seller_id():
+    engine = create_sql_engine()
+    r = engine.execute('SELECT MAX(seller_id) FROM public.seller')
+    engine.dispose()
+    for re in r:
+        return re[0]
+
+
 if __name__ == '__main__':
     r = random.randint(100, 10000)
     b = r
@@ -67,6 +82,9 @@ if __name__ == '__main__':
     create_transcation(t2, sl1, b, 45.03, (45.03*0.07), 45.03 + (45.03*0.07))
     create_item(i, t, 'Golden Apple', 'Apple', 32)
     create_item(i + 1, t, 'Ripe Pineapple', 'Pineapple', 13.03)
+
+    res = get_max_buyer_id()
+    print(res)
 
 # create seller
 
