@@ -36,7 +36,6 @@ def create_transcation(transaction_id, location_id, buyer_id, sub_total, tax, to
     engine = create_sql_engine()
     transaction_lat = transaction_lat if transaction_lat else 'NULL'
     transaction_long = transaction_long if transaction_long else 'NULL'
-    current_time = datetime.now()
     r = engine.execute('''INSERT INTO transact (transaction_id, location_id, buyer_id, sub_total, tax, total, transaction_datetime, transaction_lat, transaction_long)
                             VALUES ({id}, {location}, {buyer}, {sub_total}, {tax}, {total}, {time}, {lat}, {long})
                             '''.format(id=transaction_id, location=location_id, buyer=buyer_id, sub_total=sub_total, tax=tax, total=total, time='NOW()', lat=transaction_lat, long=transaction_long))
