@@ -10,10 +10,19 @@ def create_sql_engine():
 def create_buyer(buyer_id):
     engine = create_sql_engine()
     r = engine.execute('INSERT INTO buyer (buyer_id) values ({buyer_id})'.format(buyer_id=buyer_id))
-    print(r)
+    engine.dispose()
 
-# if __name__ == '__main__':
-#     create_buyer(22)
+
+def create_seller(seller_id, seller_name):
+    engine = create_sql_engine()
+    r = engine.execute('INSERT INTO seller (seller_id, seller_name) values ({seller_id}, \'{seller_name}\')'.format(
+        seller_id=seller_id, seller_name=seller_name))
+    engine.dispose()
+
+
+if __name__ == '__main__':
+    create_buyer(26)
+    create_seller(22, 'Nic Company')
 
 # create seller
 
